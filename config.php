@@ -1,14 +1,14 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "ecommerce_sublimacion";
+// Definir la URL base del proyecto
+define("BASE_URL", "http://localhost/ecommerce_sublimacion/");
 
-// Crear conexión
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Configuración de zona horaria
+date_default_timezone_set("Europe/Madrid");
 
-// Verificar conexión
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
-}
+// Iniciar sesión para manejo de autenticación
+session_start();
+
+// Incluir la conexión a la base de datos
+require_once __DIR__ . '/backend/includes/conexion.php';
+
 ?>
