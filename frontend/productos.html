@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos Disponibles</title>
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+  <h1>Catálogo de Productos</h1>
+  <div id="productos-container"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("http://localhost/ecommerce_sublimacion/backend/api/listar_productos.php")
+        .then(response => response.json())
+        .then(data => {
+          const container = document.getElementById("productos-container");
+          if (data.status === "success") {
+            data.productos.forEach(producto => {
+              const card = document.createElement("div");
+              card.innerHTML = `
+                <h3>${producto.nombre}</h3>
+                <img src="../../backend/uploads/${producto.imagen}" alt="${producto.nombre}" width="150">
+                <p>Precio: €${producto.precio}</p>
+                <p>Stock: ${producto.stock}</p>
+              `;
+              card.classList.add("producto-card");
+              container.appendChild(card);
+            });
+          } else {
+            container.innerHTML = "<p>No se pudieron cargar los productos.</p>";
+          }
+        })
+        .catch(error => {
+          console.error("Error al obtener productos:", error);
+        });
+    });
+  </script>
+</body>
+</html>
